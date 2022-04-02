@@ -127,9 +127,9 @@ if (A === 4 || D === 2 ) {
     console.log('하나만 맞아서 if문에 들어왔음')
 }
 
-console.log(typeof (typeof A));
-const n = null;
+// typeof도 비교연산으로 사용할 수 있고, 비교할 때는 string으로 
+console.log(typeof (typeof A)); // 출력하면 string으로 나온다고 한다.
 
-if (typeof A === 'number') {
+if (typeof A === 'number') { // 그렇기 때문에 여기서 string 형태로 해줘야 함.
     console.log(A);
 }
