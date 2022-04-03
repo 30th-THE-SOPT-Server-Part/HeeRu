@@ -55,7 +55,7 @@ const menu2 = (dinner) => {
     return `오늘 메뉴는 ${dinner}입니다.`;
 }
 
-const string2 = menu2('곱창');
+const string2 = menu2('혜수가 싫어하는 곱창');
 console.log(string2);
 
 

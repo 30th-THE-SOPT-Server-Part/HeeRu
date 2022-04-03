@@ -26,6 +26,12 @@ const serverMembers: ServerPart[] = [
         age: 4800,
         group: 'ob',
         mbti: ['isfj', 'server']
+    },
+    {
+        name: '조우찬',
+        age: 3650,
+        group: 'ob',
+        mbti: ['istp', 'iOS 최고지']
     }
 ]
 
