@@ -38,7 +38,7 @@ const dinner: Dinner = {
     const ob = array.find((array) => array.group === "ob") as Members;
     const yb = array.find((array) => array.group === "yb") as Members;
 
-    let dinnerMember: String[] = [ob.name as String, yb.name];
+    let dinnerMember: String[] = [ob.name, yb.name];
 
     console.log(
       `오늘의 저녁 식사 멤버는 ${dinnerMember[0]}, ${dinnerMember[1]}`
