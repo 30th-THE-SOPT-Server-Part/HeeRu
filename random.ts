@@ -2,17 +2,7 @@
 // 1. Member, Dinner interface 만들고 타입 지정하기
 // 2. organize 내부 로직 채우기
 
-interface Members {
-  name: String;
-  group: String;
-}
-
-// 기억하기! : interface에는 함수가 들어갈 수 있음
-interface Dinner {
-  member: Members[];
-  shuffle(member: Members[]): Members[];
-  organize(member: Members[]): void;
-}
+import { Dinner } from "./interface/dinner";
 
 const dinner: Dinner = {
   member: [
