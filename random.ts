@@ -3,6 +3,7 @@
 // 2. organize 내부 로직 채우기
 
 import { Dinner } from "./interface/dinner";
+import { Members } from "./interface/member";
 
 const dinner: Dinner = {
   member: [
@@ -34,10 +35,10 @@ const dinner: Dinner = {
   organize(array) {
     this.shuffle(array);
 
-    const ob = array.filter((array) => array.group === "ob");
-    const yb = array.filter((array) => array.group === "yb");
+    const ob = array.find((array) => array.group === "ob") as Members;
+    const yb = array.find((array) => array.group === "yb") as Members;
 
-    let dinnerMember: String[] = [ob[0].name, yb[0].name];
+    let dinnerMember: String[] = [ob.name as String, yb.name];
 
     console.log(
       `오늘의 저녁 식사 멤버는 ${dinnerMember[0]}, ${dinnerMember[1]}`
