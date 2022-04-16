@@ -35,14 +35,18 @@ const dinner: Dinner = {
   organize(array) {
     this.shuffle(array);
 
-    const ob = array.find((array) => array.group === "ob") as Members;
-    const yb = array.find((array) => array.group === "yb") as Members;
+    const ob = array.find((array) => array.group === "ob");
+    const yb = array.find((array) => array.group === "yb");
 
-    let dinnerMember: String[] = [ob.name, yb.name];
-
-    console.log(
-      `오늘의 저녁 식사 멤버는 ${dinnerMember[0]}, ${dinnerMember[1]}`
-    );
+    // 타입가드
+    if (ob && yb) {
+      const dinnerMember: String[] = [ob.name, yb.name];
+      console.log(
+        `오늘의 저녁 식사 멤버는 ${dinnerMember[0]}, ${dinnerMember[1]}`
+      );
+    } else {
+      console.log("undefined가 나왔겠지요");
+    }
   },
 };
 
