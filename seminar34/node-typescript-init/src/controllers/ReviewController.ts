@@ -1,10 +1,10 @@
+import { ReviewCreateDto } from "../interfaces/review/ReviewCreateDto";
+import { validationResult } from "express-validator";
+import ReviewService from "../services/ReviewService";
 import express, { Request, Response } from "express";
 import statusCode from "../modules/statusCode";
 import message from "../modules/responseMessage";
 import util from "../modules/util";
-import { ReviewCreateDto } from "../interfaces/review/ReviewCreateDto";
-import { validationResult } from "express-validator";
-import ReviewService from "../services/ReviewService";
 
 /**
  * @route POST /review/movies/:movieId
@@ -12,7 +12,7 @@ import ReviewService from "../services/ReviewService";
  * @access Public
  */
 
-const createReview = async (req: Request, res: Request) => {
+const createReview = async (req: Request, res: Response) => {
   const error = validationResult(req);
   // error가 false면 error가 있다는 것
   if (!error.isEmpty()) {
