@@ -7,6 +7,9 @@ const message = {
   INVALID_PASSWORD: "잘못된 비밀번호",
   SIGNIN_USER_SUCCESS: "로그인 성공",
 
+  // file
+  CREATE_FILE_SUCCESS: "파일 업로드 성공",
+
   // 유저 조회
   READ_USER_SUCCESS: "유저 조회 성공",
   CREATE_USER_SUCCESS: "유저 생성 성공",

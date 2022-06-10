@@ -99,7 +99,7 @@ const signInUser = async (req: Request, res: Response) => {
     res
       .status(statusCode.OK)
       .send(util.success(statusCode.OK, message.SIGNIN_USER_SUCCESS, data));
-  } catch (e) {
+  } catch (error) {
     console.log(error);
     // 서버 내부에서 오류 발생
     res
@@ -208,4 +208,5 @@ export default {
   updateUser,
   findUserById,
   deleteUserById,
+  signInUser,
 };
