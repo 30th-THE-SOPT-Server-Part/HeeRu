@@ -13,6 +13,13 @@ const message = {
   // 리뷰
   CREATE_REVIEW_SUCCESS: "리뷰 작성 성공",
   READ_REVIEW_SUCCESS: "리뷰 조회 성공",
+
+  // 토큰
+  NULL_VALUE_TOKEN: "토큰이 없습니다.",
+  INVALID_TOKEN: "잘못된 토큰입니다.",
+
+  // 검색
+  SEARCH_MOVIE_SUCCESS: "영화 검색 성공",
 };
 
 export default message;
