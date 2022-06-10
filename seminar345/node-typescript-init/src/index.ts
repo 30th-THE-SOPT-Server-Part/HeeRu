@@ -4,6 +4,7 @@ const app = express();
 import connectDB from "./loaders/db";
 import routes from "./routes";
 require("dotenv").config();
+import multer from "multer";
 
 connectDB(); // 몽고DB에 연결
 
@@ -24,6 +25,12 @@ app.use(function (
   res: Response,
   next: NextFunction
 ) {
+  if (err instanceof multer.MulterError) {
+    return res.json({
+      success: 0,
+      message: err.message,
+    });
+  }
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "production" ? err : {};
 

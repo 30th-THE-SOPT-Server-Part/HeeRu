@@ -16,6 +16,18 @@ router.post(
   ],
   UserController.createUser
 );
+
+router.post(
+  "/signin",
+  [
+    body("email").notEmpty(),
+    body("password").notEmpty(),
+    body("password").isLength({ min: 6 }),
+    body("email").isEmail(),
+  ],
+  UserController.signInUser
+);
+
 router.put("/:userId", UserController.updateUser);
 router.get("/:userId", UserController.findUserById);
 router.delete("/:userId", UserController.deleteUserById);

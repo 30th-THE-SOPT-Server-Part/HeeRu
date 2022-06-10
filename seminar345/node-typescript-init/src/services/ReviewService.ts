@@ -1,6 +1,9 @@
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import { ReviewCreateDto } from "../interfaces/review/ReviewCreateDto";
+import { ReviewInfo } from "../interfaces/review/ReviewInfo";
+import { ReviewOptionType } from "../interfaces/review/ReviewOptionType";
 import { ReviewResponseDto } from "../interfaces/review/ReviewResponseDto";
+import { ReviewsResponseDto } from "../interfaces/review/ReviewsResponseDto";
 import Review from "../models/Review";
 
 const createReview = async (
@@ -28,28 +31,109 @@ const createReview = async (
   }
 };
 
-const getReviews = async (movieId: string): Promise<ReviewResponseDto[]> => {
+const getReviews = async (
+  movieId: string,
+  search: string,
+  option: ReviewOptionType,
+  page: number
+): Promise<ReviewResponseDto[]> => {
+  const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
+
+  let reviews: ReviewInfo[] = [];
+  const perPage: number = 2;
+
   try {
-    const reviews = await Review.find({
-      movie: movieId,
-    })
-      .populate("writer", "name")
-      .populate("movie");
+    const pattern: RegExp = regex(search);
 
-    const data = await Promise.all(
-      reviews.map((review: any) => {
-        const result = {
-          writer: review.writer.name,
-          movie: review.movie,
-          title: review.title,
-          content: review.content,
-        };
-
-        return result;
+    if (option === "title") {
+      reviews = await Review.find({ title: { $regex: pattern } })
+        .where("movie")
+        .equals(movieId)
+        .populate("writer")
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    } else if (option === "content") {
+      reviews = await Review.find({ content: { $regex: pattern } })
+        .where("movie")
+        .equals(movieId)
+        .populate("writer")
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    } else {
+      reviews = await Review.find({
+        $or: [{ title: { $regex: pattern } }, { content: { $regex: pattern } }],
       })
-    );
+        .where("movie")
+        .equals(movieId)
+        .populate("writer")
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    }
+
+    const total = await Review.countDocuments({});
+    const lastPage: number = Math.ceil(total / perPage);
+
+    const data = {
+      reviews,
+      lastPage,
+    };
 
     return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const getReviewsBySearch = async (
+  search: string,
+  option: ReviewOptionType,
+  page: number
+): Promise<ReviewResponseDto[]> => {
+  const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
+
+  let reviews: ReviewInfo[] = [];
+  const perPage: number = 2;
+
+  try {
+    const titleRegex = regex(search);
+
+    if (option === "title") {
+      reviews = await Review.find({ title: { $regex: titleRegex } })
+        .sort({
+          createdAt: -1,
+        })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    } else if (option === "content") {
+      reviews = await Review.find({ director: { $regex: titleRegex } })
+        .sort({
+          createdAt: -1,
+        })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    } else {
+      reviews = await Review.find({
+        $or: [
+          { title: { $regex: titleRegex } },
+          { content: { $regex: titleRegex } },
+        ],
+      })
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage);
+    }
+
+    const total: number = await Review.countDocuments({});
+    const lastPage: number = Math.ceil(total / perPage);
+
+    return {
+      lastPage,
+      reviews,
+    };
   } catch (error) {
     console.log(error);
     throw error;
@@ -59,4 +143,5 @@ const getReviews = async (movieId: string): Promise<ReviewResponseDto[]> => {
 export default {
   createReview,
   getReviews,
+  getReviewsBySearch,
 };
