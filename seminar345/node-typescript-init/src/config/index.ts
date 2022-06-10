@@ -24,12 +24,10 @@ export default {
   /**
    * jwt Secret
    */
-
   jwtSecret: process.env.JWT_SECRET as string,
 
   /**
    * jwt Algorithm
    */
-
   jwtAlgo: process.env.JWT_ALGO as string,
 };
