@@ -1,9 +1,10 @@
 import { SchoolInfo } from "../school/SchoolInfo";
 
 export interface UserInfo {
-  name: String;
-  phone: String;
-  email: String;
-  age: Number;
+  name: string;
+  phone: string;
+  email: string;
+  password: string;
+  age: number;
   school: SchoolInfo;
 }
